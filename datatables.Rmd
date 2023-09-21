@@ -2,7 +2,9 @@
 title: "Exercise 3"
 author: "Brandon Gulley"
 date: "`r Sys.Date()`"
-output: html_document
+output: 
+  html_document:
+  fig_caption: yes
 ---
 
 ``` {r setup, echo=FALSE, warning = FALSE, message = FALSE}
@@ -59,7 +61,7 @@ table_mammals1
 
 ```
 
-``` {r ttest plot, echo=FALSE, include=TRUE}
+``` {r ttest plot, echo=FALSE, include=TRUE, fig.align='center', fig.cap = "Figure 1: Bar chart comparing mean body mass in g between males and females of the North American deer mouse."}
 
 mammals_PEMA2 <- mammals_PEMA %>% 
 group_by(sex) %>% 
@@ -72,9 +74,6 @@ ggplot(mammals_PEMA2, aes(x = sex, y = mean_mass, width = .25, fill = sex)) +
   geom_errorbar(aes(ymin = mean_mass - se_mass, ymax = mean_mass + se_mass), width = .1) 
 
 ```
-
-Figure 1: Bar chart comparing mean body mass in g between males and females of the North American deer mouse.
-
 ``` {r ANOVA data, echo=FALSE, include=FALSE}
 
 mammals_ANOVA <- filter(mammals, species %in% c("PELE", "ORPA", "PEMA"))
@@ -115,7 +114,7 @@ table_mammals2
 
 ```
 
-``` {r ANOVA plot, echo=FALSE, include=TRUE}
+``` {r ANOVA plot, echo=FALSE, include=TRUE, fig.align='center', fig.cap = "Figure 2: Boxplot comparing hindfoot length between male and female in three different species including the North American deer mouse (PEMA), white-footed mouse (PELE), and marsh rat (ORPA)."}
 
 anova_plot <- ggplot(mammals_ANOVA, aes(x = species, y = hindfoot_length_mm, color = sex)) +
   geom_boxplot() +
@@ -126,15 +125,12 @@ anova_plot
 
 ```
 
-Figure 2: Boxplot comparing hindfoot length between male and female in three different species including the North American deer mouse (PEMA), white-footed mouse (PELE), and marsh rat (ORPA).
-
 ``` {r ANCOVA data, echo=FALSE, include=FALSE}
 
 mammals_PEMA <- mammals %>%
   filter(species == "PEMA")
 
 ```
-
 
 ``` {r ANCOVA, echo=FALSE, warning=FALSE, message=FALSE, include=TRUE}
 
@@ -156,7 +152,7 @@ model_1 <- lm(body_length_mm ~ tail_length_mm + sex, data = mammals_PEMA)
 
 ```
 
-``` {r ANCOVA plot, echo=FALSE, include=TRUE}
+``` {r ANCOVA plot, echo=FALSE, include=TRUE, fig.align='center', fig.cap = "Figure 3: Linear regression comparing tail and body length in mm between males and females of the North American deer mouse."}
 
 ggplot(model_1) +
   geom_point(aes(x = tail_length_mm, y = body_length_mm, color = sex)) +
@@ -166,5 +162,3 @@ ggplot(model_1) +
   ylab("Body Length (mm)") 
 
 ```
-
-Figure 3: Linear regression comparing tail and body length in mm between males and females of the North American deer mouse.
